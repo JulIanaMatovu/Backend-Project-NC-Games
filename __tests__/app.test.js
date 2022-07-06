@@ -52,20 +52,19 @@ describe("GET /api/reviews", () => {
       return request(app)
         .get("/api/reviews/3")
         .expect(200)
-        .then(({body}) => {
-          expect(body).toEqual(
-            {
-              review_id: 3,
-              title: 'Ultimate Werewolf',
-              category: 'social deduction',
-              designer: 'Akihisa Okui',
-              owner: 'bainesface',
-              review_body: "We couldn't find the werewolf!",
-              review_img_url: 'https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png',
-              created_at: "2021-01-18T10:01:41.251Z",
-              votes: 5
-            },
-          );
+        .then(({ body }) => {
+          expect(body).toEqual({
+            review_id: 3,
+            title: "Ultimate Werewolf",
+            category: "social deduction",
+            designer: "Akihisa Okui",
+            owner: "bainesface",
+            review_body: "We couldn't find the werewolf!",
+            review_img_url:
+              "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+            created_at: "2021-01-18T10:01:41.251Z",
+            votes: 5,
+          });
           expect(body).toHaveProperty("review_id");
           expect(body).toHaveProperty("title");
           expect(body).toHaveProperty("review_body");
@@ -75,9 +74,15 @@ describe("GET /api/reviews", () => {
           expect(body).toHaveProperty("category");
           expect(body).toHaveProperty("owner");
           expect(body).toHaveProperty("created_at");
-
-
+        });
+    });
+    test("returns status: 404 if review_id is not found", () => {
+      return request(app)
+        .get("/api/reviews/33")
+        .expect(404)
+        .then(({body}) => {
+          expect(body.msg).toBe("review_id not found") 
+        });
         });
     });
   });
-});
