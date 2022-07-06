@@ -80,9 +80,14 @@ describe("GET /api/reviews", () => {
       return request(app)
         .get("/api/reviews/33")
         .expect(404)
-        .then(({body}) => {
-          expect(body.msg).toBe("review_id not found") 
-        });
+        .then(({ body }) => {
+          expect(body.msg).toBe("review_id not found");
         });
     });
+    test("returns status: 400 if review_id is invalid", () => {
+      return request(app)
+        .get("/api/reviews/banana")
+        .expect(400);
+    });
   });
+});
