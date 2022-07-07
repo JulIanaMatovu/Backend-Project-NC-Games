@@ -87,7 +87,10 @@ describe("GET /api/reviews", () => {
     test("returns status: 400 if review_id is invalid", () => {
       return request(app)
         .get("/api/reviews/banana")
-        .expect(400);
+        .expect(400)
+        .then(({body})=>{
+          expect(body.msg).toBe("review_id is invalid");
+        });
     });
   });
 });
